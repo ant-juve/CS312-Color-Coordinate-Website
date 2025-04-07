@@ -1,1 +1,32 @@
-<p>color-coordinate works!</p>
+<h2>Table 2</h2>
+<p>Please input the desired rows and column.</p>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <label for="row">Row:</label>
+        <input type="number" id="row" formControlName="row">
+        <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)">
+        Row is required.
+        </div>
+    <div>
+        <label for="column">Column:</label>
+        <input type="number" id="column" formControlName="column">
+        <div *ngIf="userForm.get('column')?.invalid && (userForm.get('column')?.dirty || userForm.get('column')?.touched)">
+        Column is required.
+        </div>
+    </div>
+    <button type="submit" [disabled]="userForm.invalid">Submit</button>
+    {{userForm.value['row']}} {{userForm.value['column']}}
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+

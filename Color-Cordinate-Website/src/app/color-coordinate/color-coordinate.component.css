@@ -1,0 +1,16 @@
+div {
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.ng-invalid.ng-touched {
+    border-color: red;
+}
+
+small {
+    color: red;
+}
