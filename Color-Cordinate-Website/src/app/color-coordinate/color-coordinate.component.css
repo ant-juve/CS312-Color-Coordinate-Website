@@ -1,16 +1,17 @@
-div {
-    margin-bottom: 10px;
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+    margin: 5px;
 }
 
-label {
+td{
+    height: 10px;
+    width: 10px;
+}
+
+label, input {
     display: block;
-    margin-bottom: 5px;
 }
 
-.ng-invalid.ng-touched {
-    border-color: red;
-}
-
-small {
-    color: red;
-}
+input {margin-bottom: 20px;}
