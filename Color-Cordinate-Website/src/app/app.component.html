@@ -1,15 +1,22 @@
 <!-- Modification only required for adding big stuff. Should not have to modify -->
 
-<main class="main">
-  <div class="header-bar">
-    <div class="brand">
-      <img src="/Logo.jpg" alt="Company Logo" class="logo" />
-      <h1 class="site-name">ICE9</h1>
+<div class="layout">
+  <main class="main">
+    <div class="header-bar">
+      <div class="brand">
+        <img src="/Logo.jpg" alt="Company Logo" class="logo" />
+        <h1 class="site-name">ICE9</h1>
+      </div>
+      <app-navbar></app-navbar>
     </div>
-    <app-navbar></app-navbar>
-  </div>
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 ICE9. All rights reserved.</p>
+  </footer>
+</div>
+
 
