@@ -1,32 +1,36 @@
 <h2>Table 2</h2>
-<p>Please input the desired rows and column.</p>
+<p>Please input the desired rows and columns.</p>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <label for="row">Row:</label>
-        <input type="number" id="row" formControlName="row">
-        <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)">
-        Row is required.
+        <input type="number" id="row" formControlName="row" [(ngModel)]="numRows">
+        <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)" class="form2">
+            <span *ngIf="userForm.get('row')?.errors?.['required']">Number is required.</span>
+            <span *ngIf="userForm.get('row')?.errors?.['pattern']">Invalid number format.</span>
         </div>
     <div>
         <label for="column">Column:</label>
-        <input type="number" id="column" formControlName="column">
-        <div *ngIf="userForm.get('column')?.invalid && (userForm.get('column')?.dirty || userForm.get('column')?.touched)">
-        Column is required.
+        <input type="number" id="column" formControlName="column" [(ngModel)]="numCols">
+        <div *ngIf="userForm.get('column')?.invalid && (userForm.get('column')?.dirty || userForm.get('column')?.touched)" class="form2">
+            <span *ngIf="userForm.get('column')?.errors?.['required']">Number is required.</span>
+            <span *ngIf="userForm.get('column')?.errors?.['pattern']">Invalid number format.</span>
         </div>
     </div>
-    <button type="submit" [disabled]="userForm.invalid">Submit</button>
-    {{userForm.value['row']}} {{userForm.value['column']}}
+    <button (click)="createTable()" type="submit">Create Table</button>
 </form>
 
-<table>
+<p></p>
+
+<table id="myTable">
     <thead>
         <tr>
-            <th></th>
+            <th> </th>
+            <th *ngFor="let col of columns; let i = index">{{ col || 'A' }}</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
+        <tr *ngFor="let row of rows; let i = index">
+            <td>{{i + 1}}</td>
+            <td *ngFor="let col of columns; let j = index"></td>
         </tr>
     </tbody>
 </table>
-
