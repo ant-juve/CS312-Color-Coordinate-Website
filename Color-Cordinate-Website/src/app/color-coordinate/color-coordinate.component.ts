@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+  
 @Component({
   selector: 'app-color-coordinate',
   imports: [ReactiveFormsModule, CommonModule],
@@ -9,15 +9,18 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './color-coordinate.component.css'
 })
 export class ColorCoordinateComponent {
+[x: string]: any;
 
   userForm: FormGroup;
   row = 0;
   col = 0;
+  colors = 0;
 
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      row: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      column: ['', [Validators.required, Validators.pattern('^[0-9]*$')]]
+      row: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(1000)]],
+      column: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(702)]],
+      colors: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(10)]]
     });
   }
 
@@ -35,5 +38,22 @@ export class ColorCoordinateComponent {
     this.rows = Array(this.numRows).fill(null);
     this.columns = Array(this.numCols).fill(null);
   }
+
+  runScripts(): void {
+    this.createTable();
+  }
   
+  currentLetter = '@';
+
+  letter(i: number) {
+    let charNum = i +65;
+    let index = 0; 
+    if(charNum > 90) {
+      index = Math.floor((charNum-65) / 26);
+      charNum = (charNum - (index*26));
+      return this.currentLetter = String.fromCharCode(index +64) + String.fromCharCode(charNum);
+    }
+    return this.currentLetter = String.fromCharCode(i +65);
+  }
+
 }
