@@ -15,7 +15,12 @@
 
 .navbar a:hover,
 .navbar a:focus {
-  background-color: #406682;
-  color: #ffffff;
+  background-color: #5b94ba;
+  color: #031b1b;
 }
 
+@media print {
+  .navbar{
+    display: none;
+  }
+}
