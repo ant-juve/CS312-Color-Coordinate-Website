@@ -65,8 +65,8 @@ overflow-x: scroll;
   }
   
 @media print {
-  .clicked-message {
-    display: none !important;
+  .clicked-message{
+    display: none;
   }
 }
 
