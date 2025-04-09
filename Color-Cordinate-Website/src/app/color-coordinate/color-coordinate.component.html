@@ -1,4 +1,4 @@
-<h2>Table 2</h2>
+<h2>Create a table</h2>
 <p>Please input integers of the desired rows, columns and color choice.</p>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <label for="row">Row:</label>
@@ -29,7 +29,7 @@
             <span *ngIf="userForm.get('colors')?.errors?.['max']">Max # is 10.</span>
         </div>
     </div>
-    <button (click)="createTable()" type="submit">Create Table</button>
+    <button (click)="runScripts()" type="submit">Creat Tables</button>
 </form>
 
 <ol>You selected:
@@ -40,7 +40,17 @@
 
 <p></p>
 
-<table id="myTable">
+<table id="Table 1">
+    <tbody>
+        <tr *ngFor="let row of rows; let i = index">
+            <td *ngFor="let col of columns2; let j = index"></td>
+        </tr>
+    </tbody>
+</table>
+
+<p></p>
+
+<table id="Table 2">
     <thead>
         <tr>
             <th> </th>

@@ -31,16 +31,26 @@ export class ColorCoordinateComponent {
   }
   rows: any[] = [];
   columns: string[] = [];
+  columns2: string[] = [];
+  color: string[] = [];
   numRows: number = 0;
   numCols: number = 0;
+  numColors: number = 0;
 
-  createTable() {
+  createTable1() {
+    let numCols2: number = 2;
+    this.rows = Array(this.numColors).fill(null);
+    this.columns2 = Array(numCols2).fill(null);
+  }
+
+  createTable2() {
     this.rows = Array(this.numRows).fill(null);
     this.columns = Array(this.numCols).fill(null);
   }
 
   runScripts(): void {
-    this.createTable();
+    this.createTable1();
+    this.createTable2();
   }
   
   currentLetter = '@';
