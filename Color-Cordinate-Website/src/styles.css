@@ -21,3 +21,35 @@
     color: #2c3e50;
   }
   
+  .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .site-footer {
+    background-color: #1f2c39;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+  }
+  
+  
+  @media print {
+    body {
+        filter: gray();
+        filter: url('#gayscale');
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+    form, button, select, input, .form2, ol, p, .site-name{
+        display: none;
+    }
+    
+}
