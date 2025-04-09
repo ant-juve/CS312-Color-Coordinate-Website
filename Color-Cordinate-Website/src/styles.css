@@ -41,4 +41,15 @@
   }
   
   
-  
+  @media print {
+    body {
+        filter: gray();
+        filter: url('#gayscale');
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+    form, button, select, input, .form2, ol, p{
+        display: none;
+    }
+    
+}

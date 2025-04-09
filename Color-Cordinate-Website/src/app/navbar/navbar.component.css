@@ -19,3 +19,8 @@
   color: #031b1b;
 }
 
+@media print {
+  .navbar{
+    display: none;
+  }
+}

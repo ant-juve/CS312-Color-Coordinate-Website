@@ -16,6 +16,7 @@ export class ColorCoordinateComponent {
   col = 0;
   colors = 0;
 
+
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
       row: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(1000)]],
@@ -36,13 +37,21 @@ export class ColorCoordinateComponent {
 
   createTable() {
     this.rows = Array(this.numRows).fill(null);
-    this.columns = Array(this.numCols).fill(null);
+    this.columns = Array.from({ length: this.numCols }, (_, i) => this.letter(i));
   }
 
   runScripts(): void {
     this.createTable();
   }
+  clickedMessage: string = '';
+  clickedRow: number | null = null;
+  clickedCol: string | null = null;
   
+  cellClick(row: number, col: string): void {
+    this.clickedMessage = `${col}${row}`;
+    this.clickedRow = row;
+    this.clickedCol = col;
+  }
   currentLetter = '@';
 
   letter(i: number) {
@@ -54,6 +63,9 @@ export class ColorCoordinateComponent {
       return this.currentLetter = String.fromCharCode(index +64) + String.fromCharCode(charNum);
     }
     return this.currentLetter = String.fromCharCode(i +65);
+  }
+  printPage(): void {
+    window.print();
   }
 
 }

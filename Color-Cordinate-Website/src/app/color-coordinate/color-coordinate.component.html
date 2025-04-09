@@ -1,56 +1,67 @@
-<h2>Table 2</h2>
-<p>Please input integers of the desired rows, columns and color choice.</p>
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <label for="row">Row:</label>
-        <input type="number" id="row" formControlName="row" [(ngModel)]="numRows">
-        <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)" class="form2">
-            <span *ngIf="userForm.get('row')?.errors?.['required']">Number is required.</span>
-            <span *ngIf="userForm.get('row')?.errors?.['pattern']">Invalid number format.</span>
-            <span *ngIf="userForm.get('row')?.errors?.['min']">Min # is 1.</span>
-            <span *ngIf="userForm.get('row')?.errors?.['max']">Max # is 1000.</span>
+
+<body>
+    <h2>Table 2</h2>
+    <p>Please input integers of the desired rows, columns and color choice.</p>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <label for="row">Row:</label>
+            <input type="number" id="row" formControlName="row" [(ngModel)]="numRows">
+            <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)" class="form2">
+                <span *ngIf="userForm.get('row')?.errors?.['required']">Number is required.</span>
+                <span *ngIf="userForm.get('row')?.errors?.['pattern']">Invalid number format.</span>
+                <span *ngIf="userForm.get('row')?.errors?.['min']">Min # is 1.</span>
+                <span *ngIf="userForm.get('row')?.errors?.['max']">Max # is 1000.</span>
+            </div>
+        <div>
+            <label for="column">Column:</label>
+            <input type="number" id="column" formControlName="column" [(ngModel)]="numCols">
+            <div *ngIf="userForm.get('column')?.invalid && (userForm.get('column')?.dirty || userForm.get('column')?.touched)" class="form2">
+                <span *ngIf="userForm.get('column')?.errors?.['required']">Number is required.</span>
+                <span *ngIf="userForm.get('column')?.errors?.['pattern']">Invalid number format.</span>
+                <span *ngIf="userForm.get('column')?.errors?.['min']">Min # is 1.</span>
+                <span *ngIf="userForm.get('column')?.errors?.['max']">Max # is 702.</span>
+            </div>
         </div>
-    <div>
-        <label for="column">Column:</label>
-        <input type="number" id="column" formControlName="column" [(ngModel)]="numCols">
-        <div *ngIf="userForm.get('column')?.invalid && (userForm.get('column')?.dirty || userForm.get('column')?.touched)" class="form2">
-            <span *ngIf="userForm.get('column')?.errors?.['required']">Number is required.</span>
-            <span *ngIf="userForm.get('column')?.errors?.['pattern']">Invalid number format.</span>
-            <span *ngIf="userForm.get('column')?.errors?.['min']">Min # is 1.</span>
-            <span *ngIf="userForm.get('column')?.errors?.['max']">Max # is 702.</span>
+        <div>
+            <label for="colors">Colors:</label>
+            <input type="number" id="colors" formControlName="colors">
+            <div *ngIf="userForm.get('colors')?.invalid && (userForm.get('colors')?.dirty || userForm.get('colors')?.touched)" class="form2">
+                <span *ngIf="userForm.get('colors')?.errors?.['required']">Number is required.</span>
+                <span *ngIf="userForm.get('colors')?.errors?.['pattern']">Invalid number format.</span>
+                <span *ngIf="userForm.get('colors')?.errors?.['min']">Min # is 1.</span>
+                <span *ngIf="userForm.get('colors')?.errors?.['max']">Max # is 10.</span>
+            </div>
         </div>
+        <button (click)="createTable()" type="submit">Create Table</button>
+    </form>
+
+    <ol>You selected:
+        <li># of Rows: {{this.userForm.value['row']}}</li>
+        <li># of Columns: {{this.userForm.value['column']}}</li>
+        <li># of Color: {{this.userForm.value['colors']}}</li>
+    </ol>
+
+    <p *ngIf="clickedMessage" class="clicked-message">{{ clickedMessage }}</p>
+
+    <div class="table-wrapper">
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th *ngFor="let col of columns">{{ col }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of rows; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td *ngFor="let col of columns; let j = index"
+                        (click)="cellClick(i + 1, letter(j))">
+                        
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div>
-        <label for="colors">Colors:</label>
-        <input type="number" id="colors" formControlName="colors">
-        <div *ngIf="userForm.get('colors')?.invalid && (userForm.get('colors')?.dirty || userForm.get('colors')?.touched)" class="form2">
-            <span *ngIf="userForm.get('colors')?.errors?.['required']">Number is required.</span>
-            <span *ngIf="userForm.get('colors')?.errors?.['pattern']">Invalid number format.</span>
-            <span *ngIf="userForm.get('colors')?.errors?.['min']">Min # is 1.</span>
-            <span *ngIf="userForm.get('colors')?.errors?.['max']">Max # is 10.</span>
-        </div>
-    </div>
-    <button (click)="createTable()" type="submit">Create Table</button>
-</form>
 
-<ol>You selected:
-    <li># of Rows: {{this.userForm.value['row']}}</li>
-    <li># of Columns: {{this.userForm.value['column']}}</li>
-    <li># of Color: {{this.userForm.value['colors']}}</li>
-</ol>
-
-<p></p>
-
-<table id="myTable">
-    <thead>
-        <tr>
-            <th> </th>
-            <th *ngFor="let col of columns; let i = index;">{{ col || letter(i) }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let row of rows; let i = index">
-            <td>{{i + 1}}</td>
-            <td *ngFor="let col of columns; let j = index"></td>
-        </tr>
-    </tbody>
-</table>
+    <button (click)="printPage()">Print</button>
+</body>

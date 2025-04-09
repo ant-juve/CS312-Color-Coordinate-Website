@@ -8,6 +8,7 @@ table, th, td {
 td{
     height: 10px;
     width: 10px;
+    text-align: center;
 }
 
 label, input {
@@ -15,3 +16,61 @@ label, input {
 }
 
 input {margin-bottom: 20px;}
+
+table {
+    margin-top: 20px;
+    background-color: white;
+    table-layout: fixed;
+    width: max-content;
+}
+th {
+    height: 25px;
+    width: 20px;
+    text-align: center;
+}
+button {
+    background-color: #f0e5e5;
+    border-radius: 4px;
+    font-size: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.374);
+}
+
+button:hover {
+    background-color: #222121;
+    color: white
+}
+tr td:first-child {
+    background-color: #2c2c2c; 
+    color: white;
+}
+
+tr:first-child th {
+background-color: #2c2c2c; 
+color: white;
+}
+.table-wrapper {
+overflow-x: scroll;
+}
+.clicked-message {
+    margin-top: 10px;
+    text-align: center;
+    color: #2c3e50;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: #e7ecee;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.374);
+  }
+  
+@media print {
+  .clicked-message {
+    display: none !important;
+  }
+}
+
+.form2 {
+    color: red;
+  }
+  
