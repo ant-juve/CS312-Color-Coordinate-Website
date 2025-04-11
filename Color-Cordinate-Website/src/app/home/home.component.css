@@ -1,2 +1,11 @@
+#floatright {
+    float: left;
+    max-width:25%;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
 
-  
+img {
+    box-shadow: 2px 2px 2px;
+    color:grey;
+}
