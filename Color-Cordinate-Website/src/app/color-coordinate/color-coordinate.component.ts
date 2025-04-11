@@ -4,17 +4,27 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   
 @Component({
   selector: 'app-color-coordinate',
+  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './color-coordinate.component.html',
   styleUrl: './color-coordinate.component.css'
 })
 export class ColorCoordinateComponent {
-[x: string]: any;
-
   userForm: FormGroup;
-  row = 0;
-  col = 0;
-  colors = 0;
+
+  numRows: number = 0;
+  numCols: number = 0;
+  numColors: number = 0;
+  
+  colorsList: string[] = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'grey', 'brown', 'black', 'teal'];
+  selColors: string[] = [];
+  selRowIn: number = 0;
+
+  colorrows: any[] = [];
+  grcolumns: string[] = [];
+  grrows: number[] = [];
+
+  Message: string = '';
 
 
   constructor(private fb: FormBuilder) {
@@ -26,54 +36,66 @@ export class ColorCoordinateComponent {
   }
 
   onSubmit() {
-    if (this.userForm.value) {
-      console.log(this.userForm.value);
+    if (this.userForm.valid) {
+      this.numRows = this.userForm.value['row'];
+      this.numCols = this.userForm.value['column'];
+      this.numColors = this.userForm.value['colors'];
+
+      this.createTable1();
+      this.createTable2();
     }
   }
-  rows: any[] = [];
-  columns: string[] = [];
-  columns2: string[] = [];
-  color: string[] = [];
-  numRows: number = 0;
-  numCols: number = 0;
-  numColors: number = 0;
 
   createTable1() {
-    let numCols2: number = 2;
-    this.rows = Array(this.numColors).fill(null);
-    this.columns2 = Array(numCols2).fill(null);
+    const optionColors = this.colorsList.slice(0, this.numColors);
+    this.colorrows = optionColors.map((color, i) => ({
+      selected: i === 0,
+      color: color
+    }));
+    this.selColors = [...optionColors];
+    this.selRowIn = 0;
   }
 
   createTable2() {
-    this.rows = Array(this.numRows).fill(null);
-    this.columns = Array.from({ length: this.numCols }, (_, i) => this.letter(i));
+    this.grcolumns = Array.from({ length: this.numCols }, (_, i) => this.letter(i));
+    this.grrows = Array.from({ length: this.numRows }, (_, i) => (i + 1));
   }
 
-  runScripts(): void {
-    this.createTable1();
-    this.createTable2();
+
+  Radiobutton(index: number): void {
+    this.selRowIn = index;
+    this.colorrows.forEach((row, i) => row.selected = i === index);
   }
-  clickedMessage: string = '';
-  clickedRow: number | null = null;
-  clickedCol: string | null = null;
+
+  ColorChange(index: number, event: any): void {
+    const newColor = event.target.value;
+    const prevColor = this.colorrows[index].color;
+
+    const otherColors = this.colorrows.filter((_, i) => i !== index).map( row => row.color);
+
+    if (otherColors.includes(newColor)) {
+      event.target.value = prevColor;
+      return;
+    }
+
+    this.colorrows[index].color = newColor;
+    this.selColors = this.colorrows.map(row => row.color);
+  }
   
   cellClick(row: number, col: string): void {
-    this.clickedMessage = `${col}${row}`;
-    this.clickedRow = row;
-    this.clickedCol = col;
+    this.Message = `${col}${row}`;
   }
-  currentLetter = '@';
 
-  letter(i: number) {
-    let charNum = i +65;
-    let index = 0; 
-    if(charNum > 90) {
-      index = Math.floor((charNum-65) / 26);
-      charNum = (charNum - (index*26));
-      return this.currentLetter = String.fromCharCode(index +64) + String.fromCharCode(charNum);
+  letter(index: number): string {
+    let label = '';
+    while (index >= 0){
+      label = String.fromCharCode((index % 26) + 65) + label;
+      index = Math.floor(index / 26) - 1;
     }
-    return this.currentLetter = String.fromCharCode(i +65);
+    return label;
   }
+
+
   printPage(): void {
     window.print();
   }

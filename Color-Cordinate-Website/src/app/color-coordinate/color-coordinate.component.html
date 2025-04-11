@@ -2,18 +2,24 @@
 <body>
     <h2>Create color tables</h2>
     <p>Please input integers of the desired rows, columns and color choice.</p>
+
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <label for="row">Row:</label>
-            <input type="number" id="row" formControlName="row" [(ngModel)]="numRows">
-            <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)" class="form2">
-                <span *ngIf="userForm.get('row')?.errors?.['required']">Number is required.</span>
-                <span *ngIf="userForm.get('row')?.errors?.['pattern']">Invalid number format.</span>
-                <span *ngIf="userForm.get('row')?.errors?.['min']">Min # is 1.</span>
-                <span *ngIf="userForm.get('row')?.errors?.['max']">Max # is 1000.</span>
-            </div>
+        <input type="number" id="row" formControlName="row" />
+
+
+        <div *ngIf="userForm.get('row')?.invalid && (userForm.get('row')?.dirty || userForm.get('row')?.touched)" class="form2">
+            <span *ngIf="userForm.get('row')?.errors?.['required']">Number is required.</span>
+            <span *ngIf="userForm.get('row')?.errors?.['pattern']">Invalid number format.</span>
+            <span *ngIf="userForm.get('row')?.errors?.['min']">Min # is 1.</span>
+            <span *ngIf="userForm.get('row')?.errors?.['max']">Max # is 1000.</span>
+        </div>
+
         <div>
             <label for="column">Column:</label>
-            <input type="number" id="column" formControlName="column" [(ngModel)]="numCols">
+            <input type="number" id="column" formControlName="column" />
+
+
             <div *ngIf="userForm.get('column')?.invalid && (userForm.get('column')?.dirty || userForm.get('column')?.touched)" class="form2">
                 <span *ngIf="userForm.get('column')?.errors?.['required']">Number is required.</span>
                 <span *ngIf="userForm.get('column')?.errors?.['pattern']">Invalid number format.</span>
@@ -21,9 +27,11 @@
                 <span *ngIf="userForm.get('column')?.errors?.['max']">Max # is 702.</span>
             </div>
         </div>
+
         <div>
             <label for="colors">Colors:</label>
-            <input type="number" id="colors" formControlName="colors">
+            <input type="number" id="colors" formControlName="colors" />
+
             <div *ngIf="userForm.get('colors')?.invalid && (userForm.get('colors')?.dirty || userForm.get('colors')?.touched)" class="form2">
                 <span *ngIf="userForm.get('colors')?.errors?.['required']">Number is required.</span>
                 <span *ngIf="userForm.get('colors')?.errors?.['pattern']">Invalid number format.</span>
@@ -31,7 +39,9 @@
                 <span *ngIf="userForm.get('colors')?.errors?.['max']">Max # is 10.</span>
             </div>
         </div>
-        <button (click)="runScripts()" type="submit">Create Tables</button>
+
+
+        <button type="submit">Create Tables</button>
     </form>
 
     <ol>You selected:
@@ -40,56 +50,46 @@
         <li># of Colors: {{this.userForm.value['colors']}}</li>
     </ol>
 
-    <p *ngIf="clickedMessage" class="clicked-message">{{ clickedMessage }}</p>
+    <p *ngIf="Message" class="clicked-message">Selected: {{ Message }}</p>
 
-    <div class="table-wrapper">
-        <table id="Table 1" style="width:100%">
-            <tbody>
-                <tr *ngFor="let row of rows; let i = index">
-                    <td style="width:20%">
-                        <form action="/action_page.php">
-                            <input type="radio">
-                        </form>
-                        <label for="colorPicker">Pick a color:</label>
-                        <select id="colorPicker" name="color">
-                            <option value="red">Red</option> 
-                            <option value="orange">Orange</option>
-                            <option value="yellow">Yellow</option>
-                            <option value="green">Green</option>
-                            <option value="blue">Blue</option>
-                            <option value="purple">Purple</option>
-                            <option value="gray">Gray</option>
-                            <option value="brown">Brown</option>
-                            <option value="black">Black</option>
-                            <option value="teal">Teal</option>
-                        </select>
-                    </td>
-                    <td style="width:80%"></td>
-                </tr>
-            </tbody>
-        </table>
+    <table *ngIf="colorrows.length" style="width: 100%;" id="Table1">
+        <tr *ngFor="let row of colorrows; let i = index">
+            <td style="width: 20%;">
+                <input type="radio" [checked]="row.selected" name="pick" (change)="Radiobutton(i)" />
+                <select (change)="ColorChange(i, $event)">
+                    <option *ngFor="let color of colorsList"
+                            [value]="color"
+                            [selected]="row.color === color"
+                            [disabled]="selColors.includes(color) && row.color !== color">
+                      {{ color }}
+                    </option>
+                  </select>
+            </td>
+            <td style="width: 80%;"></td>
+        </tr>
+    </table>
         
-        <p></p>
+    <p></p>
         
-        <table id="Table 2">
-            <thead>
-                <tr>
-                    <th> </th>
-                    <th *ngFor="let col of columns">{{ col }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of rows; let i = index">
-                    <td>{{i + 1}}</td>
-                    <td *ngFor="let col of columns; let j = index"
-                        (click)="cellClick(i + 1, letter(j))">
-                        
-                    </td>
 
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table *ngIf="grrows.length && grcolumns.length" id="Table 2">
+        <thead>
+            <tr>
+                <th> </th>
+                <th *ngFor="let col of grcolumns">{{ col }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of grrows">
+                <td>{{ row }}</td>
+                <td *ngFor="let col of grcolumns"
+                    (click)="cellClick(row, col)">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p></p>
 
     <button (click)="printPage()">Print</button>
 </body>
