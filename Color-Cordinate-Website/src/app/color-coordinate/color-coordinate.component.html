@@ -50,7 +50,7 @@
         <li># of Colors: {{this.userForm.value['colors']}}</li>
     </ol>
 
-    <p *ngIf="Message" class="clicked-message">Selected: {{ Message }}</p>
+    <p *ngIf="Message" class="clicked-message">{{ Message }}</p>
 
     <table *ngIf="colorrows.length" style="width: 100%;" id="Table1">
         <tr *ngFor="let row of colorrows; let i = index">
@@ -65,7 +65,9 @@
                     </option>
                   </select>
             </td>
-            <td style="width: 80%;"></td>
+            <td style="width: 80%;">
+                {{ Colorblock[row.color]?.join(', ') || '' }}
+            </td>
         </tr>
     </table>
         
@@ -83,7 +85,8 @@
             <tr *ngFor="let row of grrows">
                 <td>{{ row }}</td>
                 <td *ngFor="let col of grcolumns"
-                    (click)="cellClick(row, col)">
+                    (click)="cellClick(row, col)"
+                    [style.backgroundColor]="location[col + row] || ''">
                 </td>
             </tr>
         </tbody>
