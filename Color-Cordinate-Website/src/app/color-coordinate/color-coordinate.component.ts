@@ -24,6 +24,8 @@ export class ColorCoordinateComponent {
   grcolumns: string[] = [];
   grrows: number[] = [];
 
+  location: { [key: string]: string } = {}; 
+  Colorblock: { [color: string]: string[] } = {}; 
   Message: string = '';
 
 
@@ -80,10 +82,56 @@ export class ColorCoordinateComponent {
 
     this.colorrows[index].color = newColor;
     this.selColors = this.colorrows.map(row => row.color);
+  
+    const movedCoords = this.Colorblock[prevColor] || [];
+  
+    if (!this.Colorblock[newColor]) {
+      this.Colorblock[newColor] = [];
+    }
+  
+    for (const coord of movedCoords) {
+      this.location[coord] = newColor;
+      this.Colorblock[newColor].push(coord);
+    }
+  
+    this.Colorblock[newColor].sort((a, b) => {
+      const [aCol, aRow] = [a.match(/[A-Z]+/g)![0], parseInt(a.match(/\d+/g)![0])];
+      const [bCol, bRow] = [b.match(/[A-Z]+/g)![0], parseInt(b.match(/\d+/g)![0])];
+      return aCol.localeCompare(bCol) || aRow - bRow;
+    });
+  
+    this.Colorblock[prevColor] = [];
   }
   
   cellClick(row: number, col: string): void {
-    this.Message = `${col}${row}`;
+    const coord = `${col}${row}`;
+    const activeColor = this.colorrows[this.selRowIn].color;
+  
+    this.location[coord] = activeColor;
+  
+    if (!this.Colorblock[activeColor]) {
+      this.Colorblock[activeColor] = [];
+    }
+    if (!this.Colorblock[activeColor].includes(coord)) {
+      this.Colorblock[activeColor].push(coord);
+    }
+  
+    for (const color of Object.keys(this.Colorblock)) {
+      if (color !== activeColor) {
+        const index = this.Colorblock[color].indexOf(coord);
+        if (index !== -1) {
+          this.Colorblock[color].splice(index, 1);
+        }
+      }
+    }
+  
+    this.Colorblock[activeColor].sort((a, b) => {
+      const [aCol, aRow] = [a.match(/[A-Z]+/g)![0], parseInt(a.match(/\d+/g)![0])];
+      const [bCol, bRow] = [b.match(/[A-Z]+/g)![0], parseInt(b.match(/\d+/g)![0])];
+      return aCol.localeCompare(bCol) || aRow - bRow;
+    });
+  
+    this.Message = `Selected: ${coord}`;
   }
 
   letter(index: number): string {
