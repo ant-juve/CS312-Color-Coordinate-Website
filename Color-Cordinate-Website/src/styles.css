@@ -48,7 +48,7 @@
         -webkit-filter: grayscale(100%);
         filter: grayscale(100%);
     }
-    form, button, select, input, .form2, ol, p, .site-name{
+    form, button, select, input, .form2, ol, p, .site-name, h2{
         display: none;
     }
     
