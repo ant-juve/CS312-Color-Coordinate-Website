@@ -1,1 +1,42 @@
-<p>color-selector works!</p>
+<h2>Color Selection</h2>
+
+<h3>Add New Color</h3>
+<form [formGroup]="addForm" (ngSubmit)="addColor()">
+    <label for="colorName">Name:</label>
+    <input id="colorName" formControlName="name" />
+
+    <label for="hex">Hex Code:</label>
+    <input id="hex" formControlName="hex" />
+
+    <button type="submit">Add Color</button>
+</form>
+
+<h3>Edit Existing Color</h3>
+<form [formGroup]="editForm" (ngSubmit)="editColor()">
+    <label for="editColorSelect">Select Color:</label>
+    <select id="editColorSelect" formControlName="id" required>
+        <option *ngFor="let color of colors" [value]="color.id">
+            {{ color.name }} ({{ color.hex }})
+        </option>
+    </select>
+
+    <label for="editName">New Name:</label>
+    <input id="editName" formControlName="name" required placeholder="New name" />
+
+    <label for="editHex">New Hex Code:</label>
+    <input id="editHex" formControlName="hex" required placeholder="#NewHex" />
+
+    <button type="submit">Update Color</button>
+</form>
+
+<h3>Delete Color</h3>
+<form [formGroup]="deleteForm" (ngSubmit)="deleteColor()">
+    <label for="deleteColorSelect">Select Color to Delete:</label>
+    <select id="deleteColorSelect" formControlName="id" required>
+        <option *ngFor="let color of colors" [value]="color.id">
+            {{ color.name }} ({{ color.hex }})
+        </option>
+    </select>
+
+    <button type="submit">Delete Color</button>
+</form>
