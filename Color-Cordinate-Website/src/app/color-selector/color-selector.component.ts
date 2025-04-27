@@ -66,5 +66,11 @@ export class ColorSelectorComponent implements OnInit{
     });
   }
   
+  editColor(): void {
 
+  }
+
+  deleteColor(): void {
+    
+  }
 }
