@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-color-selector',
@@ -15,27 +15,31 @@ export class ColorSelectorComponent implements OnInit{
   editForm: FormGroup;
   deleteForm: FormGroup;
   colors: any[] =[];
+  public colorID: number = 0;
+  public name: string = '';
+  public hexvalue: string = '';
 
-  phpUrl = 'TODO'; //change after php file is made
 
-  loadColorsUrl = 'TODO';
+  phpUrl = 'https://github.com/ant-juve/CS312-Color-Coordinate-Website/blob/main/api_colors.php'; //change after php file is made
+
+  loadColorsUrl = 'https://github.com/ant-juve/CS312-Color-Coordinate-Website/blob/main/api_colors.php';
 
   message ='';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.addForm = this.fb.group({
-      name: [''],
-      hex: ['']
+      name: ['name'],
+      hexvlue: ['hexvalue']
     });
 
     this.editForm = this.fb.group({
-      id: [''],
-      name: [''],
-      hex: ['']
+      id: ['colorID'],
+      name: ['name'],
+      hexvalue: ['hexvalue']
     })
 
     this.deleteForm = this.fb.group({
-      id: ['']
+      id: ['colorID']
     });
   }
 
@@ -51,7 +55,7 @@ export class ColorSelectorComponent implements OnInit{
     const colorData = {
       action: 'add',
       name: this.addForm.value.name,
-      hex: this.addForm.value.hex
+      hexvlue: this.addForm.value.hexvalue
     };
   
     this.http.post<any>(this.phpUrl, colorData).subscribe(response => {
