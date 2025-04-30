@@ -2,11 +2,11 @@
 
 <h3>Add New Color</h3>
 <form [formGroup]="addForm" (ngSubmit)="addColor()">
-    <label for="colorName">Name:</label>
-    <input id="colorName" formControlName="name" />
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" />
 
-    <label for="hex">Hex Code:</label>
-    <input id="hex" formControlName="hex" />
+    <label for="hexvalue">Hex Code:</label>
+    <input id="hexvalue" formControlName="hexvalue" />
 
     <button type="submit">Add Color</button>
 </form>
@@ -24,7 +24,7 @@
     <input id="editName" formControlName="name" required placeholder="New name" />
 
     <label for="editHex">New Hex Code:</label>
-    <input id="editHex" formControlName="hex" required placeholder="#NewHex" />
+    <input id="editHex" formControlName="hexvalue" required placeholder="#NewHex" />
 
     <button type="submit">Update Color</button>
 </form>
