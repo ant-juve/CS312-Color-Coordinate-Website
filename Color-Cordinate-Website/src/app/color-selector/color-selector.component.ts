@@ -67,10 +67,38 @@ export class ColorSelectorComponent implements OnInit{
   }
   
   editColor(): void {
+    const colorData = {
+      action: 'edit',
+      name: this.editForm.value.name,
+      hex: this.editForm.value.hex
+    };
 
+    this.http.post<any>(this.phpUrl, colorData).subscribe(response => {
+      if (response.success) {
+        this.message = 'Color edited.';
+        this.editForm.reset();
+        this.loadColors();
+      } else {
+        this.message = response.message || 'Color cannot be edited';
+      }
+    });
   }
 
   deleteColor(): void {
-    
+    const colorData = {
+      action: 'delete',
+      name: this.deleteForm.value.name,
+      hex: this.deleteForm.value.hex
+    };
+
+    this.http.post<any>(this.phpUrl, colorData).subscribe(response => {
+      if (response.success) {
+        this.message = 'Color deleted.';
+        this.deleteForm.reset();
+        this.loadColors();
+      } else {
+        this.message = response.message || 'Color cannot be deleted';
+      }
+    });
   }
 }
