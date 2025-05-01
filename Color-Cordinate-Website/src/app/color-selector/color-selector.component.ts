@@ -20,9 +20,9 @@ export class ColorSelectorComponent implements OnInit{
   public hexvalue: string = '';
 
 
-  phpUrl = 'https://github.com/ant-juve/CS312-Color-Coordinate-Website/blob/main/api_colors.php'; //change after php file is made
+  phpUrl = 'https://www.cs.colostate.edu:4444/~c837317580/api_colors.php'; //change after php file is made
 
-  loadColorsUrl = 'https://github.com/ant-juve/CS312-Color-Coordinate-Website/blob/main/api_colors.php';
+  loadColorsUrl = 'https://www.cs.colostate.edu:4444/~c837317580/api_colors.php';
 
   message ='';
 
