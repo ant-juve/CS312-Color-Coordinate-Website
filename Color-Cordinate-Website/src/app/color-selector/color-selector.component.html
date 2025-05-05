@@ -2,10 +2,10 @@
 
 <h3>Add New Color</h3>
 <form [formGroup]="addForm" (ngSubmit)="addColor()">
-    <label for="name">Name:</label>
+    <label for="name">Name: </label>
     <input id="name" formControlName="name" />
 
-    <label for="hexvalue">Hex Code:</label>
+    <label for="hexvalue">Hex Code: </label>
     <input id="hexvalue" formControlName="hexvalue" />
 
     <button type="submit">Add Color</button>
@@ -13,28 +13,28 @@
 
 <h3>Edit Existing Color</h3>
 <form [formGroup]="editForm" (ngSubmit)="editColor()">
-    <label for="editColorSelect">Select Color:</label>
-    <select id="editColorSelect" formControlName="id" required>
-        <option *ngFor="let color of colors" [value]="color.id">
-            {{ color.name }} ({{ color.hex }})
+    <label for="name">Select Color: </label>
+    <select id="name" formControlName="name" required>
+        <option *ngFor="let color of colors" [value]="color.name">
+            {{ color.name }} ({{ color.hexvalue }})
         </option>
     </select>
 
-    <label for="editName">New Name:</label>
-    <input id="editName" formControlName="name" required placeholder="New name" />
+    <label for="editName">New Name: </label>
+    <input id="editName" formControlName="editName" required placeholder="New name" />
 
-    <label for="editHex">New Hex Code:</label>
-    <input id="editHex" formControlName="hexvalue" required placeholder="#NewHex" />
+    <label for="editHexValue">New Hex Code: </label>
+    <input id="editHexValue" formControlName="editHexValue" required placeholder="#NewHex" />
 
     <button type="submit">Update Color</button>
 </form>
 
 <h3>Delete Color</h3>
 <form [formGroup]="deleteForm" (ngSubmit)="deleteColor()">
-    <label for="deleteColorSelect">Select Color to Delete:</label>
-    <select id="deleteColorSelect" formControlName="id" required>
-        <option *ngFor="let color of colors" [value]="color.id">
-            {{ color.name }} ({{ color.hex }})
+    <label for="name">Select Color to Delete: </label>
+    <select id="name" formControlName="name" required>
+        <option *ngFor="let color of colors" [value]="color.name">
+            {{ color.name }} ({{ color.hexvalue }})
         </option>
     </select>
 

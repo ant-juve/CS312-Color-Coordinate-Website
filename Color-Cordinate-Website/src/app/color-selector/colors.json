@@ -1,0 +1,19 @@
+{
+    "colors": [
+        {
+            "id": 1, 
+            "name": "brown",
+            "hexvalue": "f4f45f"
+        },
+        {
+            "id": 2, 
+            "name": "yellow",
+            "hexvalue": "f4dg5f"
+        },
+        {
+            "id": 3, 
+            "name": "red",
+            "hexvalue": "f3445f"
+        }
+    ]
+}
