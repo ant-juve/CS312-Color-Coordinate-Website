@@ -93,9 +93,7 @@ export class ColorSelectorComponent implements OnInit {
     //   }
       
     })
-      hex: this.editForm.value.hex
-    };
-
+    
   }
 
   deleteColor(): void {
@@ -115,7 +113,6 @@ export class ColorSelectorComponent implements OnInit {
     //   }
       
     })
-      hex: this.deleteForm.value.hex
   }
 
 }
