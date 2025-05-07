@@ -1,14 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonapiService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  private http = inject(HttpClient);
   private apiUrl = 'https://www.cs.colostate.edu:4444/~c837317580/api_colors.php';
 
   public fetchMe() {
@@ -19,16 +19,11 @@ export class CommonapiService {
     return this.http.post(this.apiUrl, colorData);
   }
 
-  public putMe(colorData: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.put(this.apiUrl, colorData, httpOptions);
+  public putMe(colorData: any) : Observable<any> {
+    return this.http.put<any>(this.apiUrl, colorData);
   }
 
   public deleteMe(colorData: any) {
-    return this.http.delete(this.apiUrl, colorData);
+    return this.http.delete<any>(this.apiUrl, colorData);
   }
 }

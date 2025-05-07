@@ -4,9 +4,18 @@
 <form [formGroup]="addForm" (ngSubmit)="addColor()">
     <label for="name">Name: </label>
     <input id="name" formControlName="name" />
+    <div *ngIf="addForm.get('name')?.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)" class="form2">
+        <span *ngIf="addForm.get('name')?.errors?.['required']">A name is required.</span>
+        <span *ngIf="addForm.get('name')?.errors?.['pattern']">Input can only be numbers and letters.</span>
+    </div>
 
     <label for="hexvalue">Hex Code: </label>
     <input id="hexvalue" formControlName="hexvalue" />
+    <div *ngIf="addForm.get('hexvalue')?.invalid && (addForm.get('hexvalue')?.dirty || addForm.get('hexvalue')?.touched)" class="form2">
+        <span *ngIf="addForm.get('hexvalue')?.errors?.['required']">A hex value is required.</span>
+        <span *ngIf="addForm.get('hexvalue')?.errors?.['pattern']">Input can only be numbers and letters.</span>
+        <span *ngIf="addForm.get('hexvalue')?.errors?.['minlength'] || addForm.get('hexvalue')?.errors?.['maxlength']">Hex Value must be exactly 6 characters.</span>
+    </div>
 
     <button type="submit">Add Color</button>
 </form>
@@ -22,9 +31,18 @@
 
     <label for="editName">New Name: </label>
     <input id="editName" formControlName="editName" required placeholder="New name" />
+    <div *ngIf="editForm.get('editName')?.invalid && (editForm.get('editName')?.dirty || editForm.get('editName')?.touched)" class="form2">
+        <span *ngIf="editForm.get('editName')?.errors?.['required']">A name is required.</span>
+        <span *ngIf="editForm.get('editName')?.errors?.['pattern']">Input can only be numbers and letters.</span>
+    </div>
 
     <label for="editHexValue">New Hex Code: </label>
     <input id="editHexValue" formControlName="editHexValue" required placeholder="#NewHex" />
+    <div *ngIf="editForm.get('editHexValue')?.invalid && (editForm.get('editHexValue')?.dirty || editForm.get('editHexValue')?.touched)" class="form2">
+        <span *ngIf="editForm.get('editHexValue')?.errors?.['required']">A Hex Value is required.</span>
+        <span *ngIf="editForm.get('editHexValue')?.errors?.['pattern']">Input can only be numbers and letters.</span>
+        <span *ngIf="editForm.get('editHexValue')?.errors?.['minlength'] || editForm.get('editHexValue')?.errors?.['maxlength']">Hex Value must be exactly 6 characters.</span>
+    </div>
 
     <button type="submit">Update Color</button>
 </form>
