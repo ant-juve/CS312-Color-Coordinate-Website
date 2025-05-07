@@ -1,6 +1,6 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonapiService } from '../commonapi.service';
 
 @Component({
@@ -24,15 +24,16 @@ export class ColorSelectorComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public common: CommonapiService){  
     this.addForm = this.fb.group({
-    name: ['name'],
-    hexvalue: ['hexvalue']
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+      hexvalue: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/), Validators.minLength(6), Validators.maxLength(6)]]
     });
+    
 
     this.editForm = this.fb.group({
-      name: new FormControl('name'),
-      editName: new FormControl(''),
-      editHexValue: new FormControl('')
-      })
+      name: ['name',[Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+      editName: ['',[Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/)]],
+      editHexValue: ['',[Validators.required, Validators.pattern(/^[a-zA-Z0-9]*$/), Validators.minLength(6), Validators.maxLength(6)]]
+      });
       
     this.deleteForm = this.fb.group({
       name: new FormControl('name')
@@ -59,23 +60,23 @@ export class ColorSelectorComponent implements OnInit {
       name: this.addForm.value.name,
       hexvalue: this.addForm.value.hexvalue
     }
-    this.common.pushMe(colorData).subscribe(response => ({
-      // next: (response) => {
-      //   this.message = 'Color added - ' + response;
-      //   this.addForm.reset();
-      //   this.loadColors();
-      // },
+    this.common.pushMe(colorData).subscribe(response => {
+      next: (response: any) => {
+        this.message = 'Color added - ' + response;
+        this.addForm.reset();
+        this.loadColors();
+      }
       // error: (error) => {
-      //  this.message = "Color already exists";
-      //  this.message = response.message;
-      // }
-    })
-  )
+      // this.message = "Color already exists";
+      // this.message = response.message;
+      // },
+    }
+    );
   }
 
   editColor(): void {
     const colorData = {
-      action: 'edit',
+      action: 'put',
       name: this.editForm.value.name,
       editName: this.editForm.value.editName,
       editHexValue: this.editForm.value.editHexValue,
@@ -93,9 +94,7 @@ export class ColorSelectorComponent implements OnInit {
     //   }
       
     })
-      hex: this.editForm.value.hex
-    };
-
+    
   }
 
   deleteColor(): void {
@@ -115,7 +114,6 @@ export class ColorSelectorComponent implements OnInit {
     //   }
       
     })
-      hex: this.deleteForm.value.hex
   }
 
 }
