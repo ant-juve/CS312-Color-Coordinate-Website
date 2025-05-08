@@ -16,7 +16,7 @@ export class ColorCoordinateComponent {
   numCols: number = 0;
   numColors: number = 0;
   
-  colorsList: string[] = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'grey', 'brown', 'black', 'teal'];
+  colorsList: string[] = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Grey', 'Brown', 'Black', 'Teal'];
   selColors: string[] = [];
   selRowIn: number = 0;
 
@@ -147,5 +147,18 @@ export class ColorCoordinateComponent {
   printPage(): void {
     window.print();
   }
+
+  colorHexMap: { [key: string]: string } = {
+    Red: '#FF0000',
+    Orange: '#FFA500',
+    Yellow: '#FFFF00',
+    Green: '#008000',
+    Blue: '#0000FF',
+    Purple: '#800080',
+    Grey: '#808080',
+    Brown: '#A52A2A',
+    Black: '#000000',
+    Teal: '#008080'
+  };
 
 }

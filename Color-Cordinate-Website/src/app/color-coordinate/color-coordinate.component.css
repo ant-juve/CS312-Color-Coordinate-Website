@@ -65,10 +65,22 @@ overflow-x: scroll;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.374);
   }
   
-@media print {
-  .clicked-message{
+.print-only {
     display: none;
-  }
+}
+
+@media print {
+    .print-only {
+        display: inline !important;
+    }
+
+    .color-control {
+        display: none;
+    }
+
+    button, form, input, select {
+        display: none !important;
+    }
 }
 
 .form2 {
