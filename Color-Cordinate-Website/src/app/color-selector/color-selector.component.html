@@ -1,5 +1,5 @@
 <h2>Color Selection</h2>
-
+<p>This is where you can add, edit, or delete a color for the color coordinate page.</p>
 <h3>Add New Color</h3>
 <form [formGroup]="addForm" (ngSubmit)="addColor()">
     <label for="name">Name: </label>
@@ -9,7 +9,7 @@
         <span *ngIf="addForm.get('name')?.errors?.['pattern']">Input can only be numbers and letters.</span>
     </div>
 
-    <label for="hexvalue">Hex Code: </label>
+    <label for="hexvalue"> Hex Code: </label>
     <input id="hexvalue" formControlName="hexvalue" />
     <div *ngIf="addForm.get('hexvalue')?.invalid && (addForm.get('hexvalue')?.dirty || addForm.get('hexvalue')?.touched)" class="form2">
         <span *ngIf="addForm.get('hexvalue')?.errors?.['required']">A hex value is required.</span>
@@ -29,14 +29,14 @@
         </option>
     </select>
 
-    <label for="editName">New Name: </label>
+    <label for="editName"> New Name: </label>
     <input id="editName" formControlName="editName" required placeholder="New name" />
     <div *ngIf="editForm.get('editName')?.invalid && (editForm.get('editName')?.dirty || editForm.get('editName')?.touched)" class="form2">
         <span *ngIf="editForm.get('editName')?.errors?.['required']">A name is required.</span>
         <span *ngIf="editForm.get('editName')?.errors?.['pattern']">Input can only be numbers and letters.</span>
     </div>
 
-    <label for="editHexValue">New Hex Code: </label>
+    <label for="editHexValue"> New Hex Code: </label>
     <input id="editHexValue" formControlName="editHexValue" required placeholder="#NewHex" />
     <div *ngIf="editForm.get('editHexValue')?.invalid && (editForm.get('editHexValue')?.dirty || editForm.get('editHexValue')?.touched)" class="form2">
         <span *ngIf="editForm.get('editHexValue')?.errors?.['required']">A Hex Value is required.</span>
@@ -44,7 +44,7 @@
         <span *ngIf="editForm.get('editHexValue')?.errors?.['minlength'] || editForm.get('editHexValue')?.errors?.['maxlength']">Hex Value must be exactly 6 characters.</span>
     </div>
 
-    <button type="submit">Update Color</button>
+    <button type="submit"> Update Color</button>
 </form>
 
 <h3>Delete Color</h3>
@@ -60,13 +60,13 @@
 </form>
 <p *ngIf="message">{{ message }}</p>
 
-<h3>Colors Table</h3>
+<h3>Current Colors Table</h3>
 <table>
   <thead>
     <tr>
       <th>Name</th>
-      <th>Hex Value</th>
-      <th>Preview</th>
+      <th>Hex </th>
+      <th>Color Preview</th>
     </tr>
   </thead>
   <tbody>
@@ -75,7 +75,7 @@
       <td>#{{ color.hexvalue }}</td>
       <td>
         <span [style.backgroundColor]="'#' + color.hexvalue"
-              style="display: inline-block; width: 40px; height: 20px; border: 1px solid #000;">
+              style="display: inline-block; width: 100px; height: 30px; border: 1px solid #000;">
         </span>
       </td>
     </tr>

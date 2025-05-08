@@ -71,7 +71,7 @@ overflow-x: scroll;
 
 @media print {
     .print-only {
-        display: inline !important;
+        display: inline;
     }
 
     .color-control {
@@ -79,7 +79,10 @@ overflow-x: scroll;
     }
 
     button, form, input, select {
-        display: none !important;
+        display: none;
+    }
+    .clicked-message {
+        display: none;
     }
 }
 
