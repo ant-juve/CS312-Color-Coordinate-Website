@@ -37,7 +37,7 @@ export class ColorCoordinateComponent implements OnInit {
     this.userForm = this.fb.group({
       row: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(1000)]],
       column: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(702)]],
-      colors: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(10)]]
+      colors: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1)]]
     });
   }
 
