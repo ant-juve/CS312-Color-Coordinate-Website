@@ -45,7 +45,7 @@ export class ColorSelectorComponent implements OnInit {
   }
 
   loadColors(): void {
-    this.common.fetchMe().subscribe(
+    this.common.getColors().subscribe(
       (colors: any) => {
         this.colors = colors;
         console.log(this.colors);
@@ -55,65 +55,60 @@ export class ColorSelectorComponent implements OnInit {
   }
 
   addColor(): void {
-    const colorData = {
-      action: 'add',
-      name: this.addForm.value.name,
-      hexvalue: this.addForm.value.hexvalue
-    }
-    this.common.pushMe(colorData).subscribe(response => {
-      next: (response: any) => {
-        this.message = 'Color added - ' + response;
+    const name = this.addForm.value.name;
+    const hexvalue = this.addForm.value.hexvalue;
+
+    this.common.addColor(name, hexvalue).subscribe({
+      next: (response) => {
+        this.message = 'Color added.';
         this.addForm.reset();
         this.loadColors();
+      },
+      error: (err) => {
+        this.message = 'Error adding color.';
       }
-      // error: (error) => {
-      // this.message = "Color already exists";
-      // this.message = response.message;
-      // },
-    }
-    );
+    });
   }
 
   editColor(): void {
-    const colorData = {
-      action: 'put',
-      name: this.editForm.value.name,
-      editName: this.editForm.value.editName,
-      editHexValue: this.editForm.value.editHexValue,
+    const originalName = this.editForm.value.name;
+    const newName = this.editForm.value.editName;
+    const newHex = this.editForm.value.editHexValue;
 
-    }
-    this.common.putMe(colorData).subscribe(response => {
-
-    //   if (response.success) {
+    this.common.editColor(originalName, newName, newHex).subscribe({
+      next: () => {
         this.message = 'Color updated.';
         this.editForm.reset();
         this.loadColors();
-    //   } else {
-    //     this.message = "Color already exists";
-    //     this.message = response.message;
-    //   }
-      
-    })
-    
+      },
+      error: () => {
+        this.message = 'Error editing color.';
+      }
+    });
   }
 
   deleteColor(): void {
-    const colorData = {
-      action: 'delete',
-      name: this.deleteForm.value.name,
-    }
-    this.common.deleteMe(colorData).subscribe(response => {
+    const name = this.deleteForm.value.name;
 
-    //   if (response.success) {
+    const confirmed = window.confirm(`Are you sure you want to delete the color "${name}"?`);
+  if (!confirmed) {
+    this.message = 'Deletion canceled.';
+    return;
+  }
+  if (this.colors.length <= 2) {
+    this.message = '2 Colors must be in database';
+    return;
+  }
+    this.common.deleteColor(name).subscribe({
+      next: () => {
         this.message = 'Color deleted.';
         this.deleteForm.reset();
         this.loadColors();
-    //   } else {
-    //     this.message = "Color already exists";
-    //     this.message = response.message;
-    //   }
-      
-    })
+      },
+      error: () => {
+        this.message = 'Error deleting color.';
+      }
+    });
   }
 
 }

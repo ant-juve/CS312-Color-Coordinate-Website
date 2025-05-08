@@ -58,3 +58,26 @@
 
     <button type="submit">Delete Color</button>
 </form>
+<p *ngIf="message">{{ message }}</p>
+
+<h3>Colors Table</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Hex Value</th>
+      <th>Preview</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let color of colors">
+      <td>{{ color.name }}</td>
+      <td>#{{ color.hexvalue }}</td>
+      <td>
+        <span [style.backgroundColor]="'#' + color.hexvalue"
+              style="display: inline-block; width: 40px; height: 20px; border: 1px solid #000;">
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

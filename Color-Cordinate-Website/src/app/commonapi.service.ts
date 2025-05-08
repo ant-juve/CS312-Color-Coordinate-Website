@@ -2,28 +2,44 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface Color {
+  name: string;
+  hexvalue: string;
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class CommonapiService {
 
   constructor(private http: HttpClient) { }
 
-  private apiUrl = 'https://www.cs.colostate.edu:4444/~c837317580/api_colors.php';
+  private apiUrl = 'https://www.cs.colostate.edu:4444/~antjuve/api_colors.php';
 
-  public fetchMe() {
-    return this.http.get(this.apiUrl);
+  getColors(): Observable<Color[]> {
+    return this.http.get<Color[]>(this.apiUrl);
   }
 
-  public pushMe(colorData: any) {
-    return this.http.post(this.apiUrl, colorData);
+  addColor(name: string, hexvalue: string): Observable<any> {
+    return this.http.post(this.apiUrl, {
+      action: 'add',
+      name,
+      hexvalue
+    });
   }
 
-  public putMe(colorData: any) : Observable<any> {
-    return this.http.put<any>(this.apiUrl, colorData);
+  editColor(originalName: string, newName: string, newHex: string): Observable<any> {
+    return this.http.post(this.apiUrl, {
+      action: 'edit',
+      name: originalName,
+      editName: newName,
+      editHexValue: newHex
+    });
   }
-
-  public deleteMe(colorData: any) {
-    return this.http.delete<any>(this.apiUrl, colorData);
+  deleteColor(name: string): Observable<any> {
+    return this.http.post(this.apiUrl, {
+      action: 'delete',
+      name
+    });
   }
 }

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-  
+import { CommonapiService, Color } from '../commonapi.service';
+
 @Component({
   selector: 'app-color-coordinate',
   standalone: true,
@@ -9,14 +10,15 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './color-coordinate.component.html',
   styleUrl: './color-coordinate.component.css'
 })
-export class ColorCoordinateComponent {
+export class ColorCoordinateComponent implements OnInit {
+
   userForm: FormGroup;
 
   numRows: number = 0;
   numCols: number = 0;
   numColors: number = 0;
   
-  colorsList: string[] = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Grey', 'Brown', 'Black', 'Teal'];
+  colorsList: string[] = [];
   selColors: string[] = [];
   selRowIn: number = 0;
 
@@ -27,9 +29,11 @@ export class ColorCoordinateComponent {
   location: { [key: string]: string } = {}; 
   Colorblock: { [color: string]: string[] } = {}; 
   Message: string = '';
+  colorHexMap: { [key: string]: string } = {};
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private colorService: CommonapiService) {
+
     this.userForm = this.fb.group({
       row: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(1000)]],
       column: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1), Validators.max(702)]],
@@ -37,6 +41,14 @@ export class ColorCoordinateComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.colorService.getColors().subscribe(data => {
+      this.colorsList = data.map(c => c.name);
+      this.colorHexMap = {};
+      data.forEach(c => this.colorHexMap[c.name] = '#' + c.hexvalue);
+    });
+  }
+  
   onSubmit() {
     if (this.userForm.valid) {
       this.numRows = this.userForm.value['row'];
@@ -147,18 +159,7 @@ export class ColorCoordinateComponent {
   printPage(): void {
     window.print();
   }
-
-  colorHexMap: { [key: string]: string } = {
-    Red: '#FF0000',
-    Orange: '#FFA500',
-    Yellow: '#FFFF00',
-    Green: '#008000',
-    Blue: '#0000FF',
-    Purple: '#800080',
-    Grey: '#808080',
-    Brown: '#A52A2A',
-    Black: '#000000',
-    Teal: '#008080'
-  };
+  
+  
 
 }
